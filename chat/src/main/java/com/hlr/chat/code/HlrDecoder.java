@@ -1,6 +1,7 @@
 package com.hlr.chat.code;
 
 import com.hlr.chat.common.entity.HlrMsg;
+import com.hlr.chat.common.enums.MsgType;
 import com.hlr.chat.common.enums.RequestType;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -45,7 +46,6 @@ public class HlrDecoder extends MessageToMessageDecoder<ByteBuf> {
         // 数据长度
         msg.setDataLength( byteBuf.readInt());
         
-        
         // 数据类型是否支持
         
         if(msg.getDeviceTypeLength() > byteBuf.readableBytes() ){
@@ -62,8 +62,11 @@ public class HlrDecoder extends MessageToMessageDecoder<ByteBuf> {
         
         byte[] data = new byte[msg.getDataLength()];
         byteBuf.writeBytes(data);
-        msg.setData(data);
 
+        MsgType msgType = MsgType.getRequestType(msg.getDataType());
+        if(msgType != null){
+            msg.setData(msgType.convert.convert(data));
+        }
         list.add(msg);
         
         byteBuf.markReaderIndex();

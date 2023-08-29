@@ -10,7 +10,7 @@ import com.hlr.chat.convert.MsgData.JsonObjectConvert;
  *
  * @author hlr
  */
-public enum MegType {
+public enum MsgType {
 
 
     JsonObjectType(99999,new JsonObjectConvert())
@@ -19,13 +19,13 @@ public enum MegType {
     public Convert convert;
 
 
-    MegType(int type, Convert convert){
+    MsgType(int type, Convert convert){
         this.type = type;
         this.convert = convert;
     }
 
-    public static MegType getRequestType(int type){
-        for (MegType value : MegType.values()) {
+    public static MsgType getRequestType(int type){
+        for (MsgType value : MsgType.values()) {
             if( value.type == type){
                 return value;
             }

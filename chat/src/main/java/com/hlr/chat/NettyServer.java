@@ -1,6 +1,7 @@
 package com.hlr.chat;
 
 import com.hlr.chat.code.HlrDecoder;
+import com.hlr.chat.handler.HandlerAdapter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -20,6 +21,7 @@ public class NettyServer {
                         @Override  
                         protected void initChannel(Channel ch) throws Exception {  
                             ch.pipeline().addLast(new HlrDecoder());
+                            ch.pipeline().addLast(new HandlerAdapter());
                         }  
                     });  
   
