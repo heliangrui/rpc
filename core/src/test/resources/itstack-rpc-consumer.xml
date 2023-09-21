@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rpc="http://rpc.hlr.org/schema/rpc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://rpc.hlr.org/schema/rpc http://rpc.hlr.org/schema/rpc/rpc.xsd">
+
+    <!-- redis配置，保存链接 -->
+    <rpc:server id="consumer_itstack" host="127.0.0.1" port="6379"/>
+
+    <rpc:consumer id="consumer_helloService" nozzle="com.hlr.core.service.HelloService" alias="itStackRpc" version="1"/>
+
+    <rpc:provider id="provider_helloService" nozzle="com.hlr.core.service.HelloService"
+                  ref="helloService" alias="itStackRpc" version="1" />
+</beans>
