@@ -5,7 +5,7 @@
 	  http://rpc.hlr.org/schema/rpc http://rpc.hlr.org/schema/rpc/rpc.xsd">
 
     <!-- redis配置，保存链接 -->
-    <rpc:server id="consumer_itstack" host="127.0.0.1" port="6379"/>
+    <rpc:server id="consumer_itstack" host="192.168.16.200" port="6379"/>
 
     <rpc:consumer id="consumer_helloService" nozzle="com.hlr.core.service.HelloService" alias="itStackRpc" version="1"/>
 

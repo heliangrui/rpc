@@ -1,6 +1,10 @@
 package com.hlr.core.config.spring.bean;
 
+import com.alibaba.fastjson.JSON;
 import com.hlr.core.config.ProviderConfig;
+import com.hlr.core.domain.LocalServerInfo;
+import com.hlr.core.domain.RpcProviderConfig;
+import com.hlr.core.registry.RedisRegistryCenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -19,5 +23,17 @@ public class ProviderBean extends ProviderConfig implements ApplicationContextAw
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         logger.info("生产者消息注册,{}",this.getAlias());
+
+        RpcProviderConfig config = new RpcProviderConfig();
+        config.setNozzle(this.getNozzle());
+        config.setRef(this.getRef());
+        config.setAlias(this.getAlias());
+        config.setHost(LocalServerInfo.LOCAL_HOST);
+        config.setPort(LocalServerInfo.LOCAL_PORT);
+        //注册生产者
+        long count = RedisRegistryCenter.registryProvider(config.getNozzle(), config.getAlias(), JSON.toJSONString(config));
+
+        logger.info("注册生产者：{} {} {}", config.getNozzle(), config.getAlias(), count);
+        
     }
 }
